@@ -8,7 +8,6 @@ Gem::Specification.new do |spec|
   spec.version       = MissCleo::VERSION
   spec.authors       = ["Dean Hu", "Lee Ourand"]
   spec.email         = ["devs@gust.com"]
-  spec.required_ruby_version = ">= 2.3.0"
 
   spec.summary       = %q{Predict your test failures}
   spec.description   = %q{Miss Cleo frees you from having to run your full test suite to be confident in your recent code changes. Call me now!}
