@@ -25,7 +25,7 @@ Or install it yourself as:
 
 ## Setup 
 
-Right now Miss Cleo only supports Cucumber and RSpec tests. To use Miss Cleo.
+Right now Miss Cleo only supports Cucumber and RSpec tests. To use Miss Cleo:
 
 ### Cucumber
 Before you can use Miss Cleo with your Cucumber tests, add the following line to your `support/env.rb` file:
@@ -43,18 +43,31 @@ MissCleo::TestConfigurations::RspecConfig.setup_hooks(self)
 
 ### How to get predictin'
 
-To use Miss Cleo, you'll need to first build a coverage map of your *green* build. Do this by running your tests with the `COVERAGE` environment variable set to true.
+To use Miss Cleo, you'll need to first build a coverage diff of your *green* build. Do this by running your tests with the `COVERAGE` environment variable set to true.
 
 Examples:
 
 * `COVERAGE=true cucumber features/user.feature`
 * `COVERAGE=true rspec spec/user_spec.rb`
 
+With your coverage diffs built, you'll need to generate a coverage map, which we're calling a *deck*. To build your deck, run:
+`miss_cleo build_deck <list of coverage diff files>`
+
 ## Usage
 
-After you've made some code changes, run `miss_cleo` to be shown the relevant tests to run.
+After you've made some code changes, run `miss_cleo predict` to be shown the relevant tests to run.
 
 **Note**: Miss Cleo only tries to predict tests failures for uncommitted changes. Make sure your build is green before committing code!
+
+
+## Known Oversights
+
+Like the real Miss Cleo, we can't predict everything. Things we can't predict include:
+- Rails views
+- ActiveRecord methods
+- ActiveRecord concerns
+- Anything that generally runs only through gem code
+- Any external library code
 
 ## Contributing
 
