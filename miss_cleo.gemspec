@@ -6,7 +6,7 @@ require 'miss_cleo/version'
 Gem::Specification.new do |spec|
   spec.name          = "miss_cleo"
   spec.version       = MissCleo::VERSION
-  spec.authors       = ["Dean Hu", "Lee Ourand"]
+  spec.authors       = ["Dean Hu", "Lee Ourand", "John Bernier"]
   spec.email         = ["devs@gust.com"]
 
   spec.summary       = %q{Predict your test failures}

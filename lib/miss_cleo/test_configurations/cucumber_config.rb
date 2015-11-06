@@ -12,7 +12,7 @@ module MissCleo
             execute.call
             after = Coverage.peek_result
             if file_and_line = scenario.try(:file_colon_line)
-              LOGS << [ file_and_line, before, after ]
+              LOGS << [ file_and_line, CoverageFilter.filter_and_trim(before), CoverageFilter.filter_and_trim(after) ]
             end
           end
 

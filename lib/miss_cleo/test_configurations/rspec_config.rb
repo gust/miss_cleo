@@ -15,8 +15,8 @@ module MissCleo
             before = Coverage.peek_result
             example.call
             after = Coverage.peek_result
-            LOGS << [ example.location, CoverageFilter.filter_core(before),
-                      CoverageFilter.filter_core(after) ]
+            LOGS << [ example.location, CoverageFilter.filter_and_trim(before),
+                      CoverageFilter.filter_and_trim(after) ]
           end
         end
       end
