@@ -15,8 +15,8 @@ module MissCleo
         end
       end
 
-      File.open("total_coverage_map.json", "w") do |f|
-        f.write(JSON.dump(cov_map))
+      File.open("total_coverage_map.json.gz", "w") do |f|
+        f.write(JSON.dump(cov_map).gzip)
       end
     end
 
@@ -41,7 +41,7 @@ module MissCleo
         end
       end
 
-      coverage_map = JSON.parse(File.open("total_coverage_map.json").read)
+      coverage_map = JSON.parse(File.open("total_coverage_map.json.gz").read.gunzip)
       tests_to_run = []
       lines_changed.each do |file, line|
         coverage_map && coverage_map[file] && coverage_map[file].fetch(line.to_s, []).uniq.each do |desc|

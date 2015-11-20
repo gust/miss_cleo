@@ -2,7 +2,7 @@
 
 require "miss_cleo"
 require 'pry'
-include MissCleo::CoverageMapHelper
+include ::MissCleo::CoverageMapHelper
 
 case ARGV.first
 when "build_deck"
