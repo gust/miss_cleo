@@ -14,7 +14,7 @@ module MissCleo
     def self.normalize_paths(result_hash)
       normalized_hash = Hash.new
       result_hash.each do |key, value|
-        trimmed_key = key.gsub(/#{Regexp.quote(`pwd`.chomp)}/, "")
+        trimmed_key = key.gsub(/#{Regexp.quote(`pwd`.chomp)}\//, "")
         normalized_hash[trimmed_key] = value
       end
 
