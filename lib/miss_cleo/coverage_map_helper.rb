@@ -20,7 +20,7 @@ module MissCleo
       end
     end
 
-    def predict
+    def predict(unzipped_file)
       repo = Rugged::Repository.new '.'
       lines_changed = Set.new
 
@@ -41,7 +41,7 @@ module MissCleo
         end
       end
 
-      coverage_map = JSON.parse(File.open("total_coverage_map.json.gz").read.gunzip)
+      coverage_map = JSON.parse(unzipped_file)
       tests_to_run = []
       lines_changed.each do |file, line|
         coverage_map && coverage_map[file] && coverage_map[file].fetch(line.to_s, []).uniq.each do |desc|

@@ -8,6 +8,13 @@ case ARGV.first
 when "build_deck"
   build_deck(ARGV[1..-1])
 when "predict"
+  unless ARGV[1]
+    puts "Specify a coverage map."
+    puts "e.g. 'miss_cleo predict map.json.gz"
+    return
+  end
+
+  map = File.open(ARGV[1]).read.gunzip
   predict
 else
   puts "Please run miss_cleo with 'build_deck' or 'predict'."
