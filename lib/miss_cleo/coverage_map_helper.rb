@@ -48,6 +48,7 @@ module MissCleo
           tests_to_run << desc
         end
       end
+      tests_to_run = tests_to_run.uniq.sort.reverse
       if lines_changed.empty?
         puts "No line changes detected."
       elsif tests_to_run.empty?
@@ -56,6 +57,8 @@ module MissCleo
         puts "Run these tests:"
         puts tests_to_run.uniq.sort
       end
+
+      tests_to_run
     end
 
 
