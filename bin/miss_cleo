@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 
 require "miss_cleo"
-require 'pry'
 include ::MissCleo::CoverageMapHelper
 
 case ARGV.first
@@ -11,11 +10,10 @@ when "predict"
   unless ARGV[1]
     puts "Specify a coverage map."
     puts "e.g. 'miss_cleo predict map.json.gz"
-    return
+  else
+    map = File.open(ARGV[1]).read.gunzip
+    predict
   end
-
-  map = File.open(ARGV[1]).read.gunzip
-  predict
 else
   puts "Please run miss_cleo with 'build_deck' or 'predict'."
 end
