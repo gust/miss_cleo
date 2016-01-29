@@ -12,7 +12,7 @@ when "predict"
     puts "e.g. 'miss_cleo predict map.json.gz"
   else
     map = File.open(ARGV[1]).read.gunzip
-    predict
+    predict(map)
   end
 else
   puts "Please run miss_cleo with 'build_deck' or 'predict'."
