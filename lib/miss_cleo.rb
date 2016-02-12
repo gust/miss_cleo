@@ -12,6 +12,9 @@ require 'miss_cleo/coverage_map'
 require 'miss_cleo/test_configurations/cucumber_config'
 require 'miss_cleo/test_configurations/rspec_config'
 require 'miss_cleo/coverage_map_helper.rb'
+require 'miss_cleo/test_configurations/action_view_hook'
+require 'miss_cleo/test_configurations/rails_action_view_config'
+require 'miss_cleo/template_helper'
 
 module MissCleo
 end
