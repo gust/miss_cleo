@@ -12,11 +12,16 @@ module MissCleo
           end
 
           RSpec.configuration.around(:example) do |example|
+            MissCleo::TemplateHelper.reset_coverage
             before = Coverage.peek_result
             example.call
             after = Coverage.peek_result
-            LOGS << [ example.location, CoverageFilter.filter_and_trim(before),
-                      CoverageFilter.filter_and_trim(after) ]
+            templates = MissCleo::TemplateHelper.template_coverage
+            LOGS << [ example.location, {
+              before: CoverageFilter.filter_and_trim(before),
+              after: CoverageFilter.filter_and_trim(after),
+              templates: templates
+            } ]
           end
         end
       end

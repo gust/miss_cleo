@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Dean Hu", "Lee Ourand", "John Bernier"]
   spec.email         = ["devs@gust.com"]
 
-  spec.summary       = %q{Predict your test failures}
+  spec.summary       = %q{Regression Test Selection}
   spec.description   = %q{Miss Cleo frees you from having to run your full test suite to be confident in your recent code changes. Call me now!}
   spec.homepage      = "http://github.com/gust/miss_cleo"
   spec.license       = "MIT"
@@ -18,8 +18,9 @@ Gem::Specification.new do |spec|
   spec.executables   = ["miss_cleo"]
   spec.require_paths = ["lib"]
 
-  spec.add_development_dependency "bundler", "~> 1.8"
-  spec.add_development_dependency "rake", "~> 10.0"
-  spec.add_runtime_dependency "rugged"
-  spec.add_runtime_dependency "gzip"
+  spec.add_development_dependency "bundler", "~> 1.7.6"
+  spec.add_development_dependency "rake", "~> 10.5.0"
+  spec.add_development_dependency "pry", "~> 0.9.12"
+  spec.add_runtime_dependency "rugged", "~> 0.23.3"
+  spec.add_runtime_dependency "gzip", "~> 1.0"
 end
