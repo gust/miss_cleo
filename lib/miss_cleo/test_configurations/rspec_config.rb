@@ -16,7 +16,7 @@ module MissCleo
             before = Coverage.peek_result
             example.call
             after = Coverage.peek_result
-            templates = MissCleo::TemplateHelper.template_coverage
+            templates = MissCleo::TemplateHelper.template_coverage.uniq
             LOGS << [ example.location, {
               before: CoverageFilter.filter_and_trim(before),
               after: CoverageFilter.filter_and_trim(after),

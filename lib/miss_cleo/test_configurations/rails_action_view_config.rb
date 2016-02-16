@@ -2,11 +2,8 @@ module MissCleo
   module TestConfigurations
     module ActionViewConfig
       def render(*args)
-        begin
-          MissCleo::TestConfigurations::ActionViewHook.record_template(identifier)
-        ensure
-          super(*args)
-        end
+        MissCleo::TestConfigurations::ActionViewHook.record_template(identifier)
+        super(*args)
       end
     end
   end
