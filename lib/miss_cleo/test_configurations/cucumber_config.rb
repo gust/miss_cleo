@@ -12,7 +12,7 @@ module MissCleo
             before = Coverage.peek_result
             execute.call
             after = Coverage.peek_result
-            templates = MissCleo::TemplateHelper.template_coverage
+            templates = MissCleo::TemplateHelper.template_coverage.uniq
             if file_and_line = scenario.try(:file_colon_line)
               LOGS << [ file_and_line, { before: CoverageFilter.filter_and_trim(before), after: CoverageFilter.filter_and_trim(after), templates: templates } ]
             end
