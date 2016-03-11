@@ -31,7 +31,7 @@ module MissCleo
         if file.include?("app/views")
           map[file]["0"].uniq || []
         else
-          map[file][line].uniq || []
+          map[file][line.to_s].uniq || []
         end
       rescue
         []
