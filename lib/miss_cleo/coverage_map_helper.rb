@@ -39,6 +39,24 @@ module MissCleo
     end
 
 
+    def predict_all_commits(unzipped_file)
+      coverage_map = ::MissCleo::CoverageMap.new(JSON.parse(unzipped_file))
+      tests_to_run = []
+      all_lines_changed.each do |file, line|
+        tests_to_run |= coverage_map.tests_for_lines(file, line)
+      end
+      if lines_changed.empty?
+        puts "No line changes detected."
+      elsif tests_to_run.empty?
+        puts "No tests found. May be due to blind spot, new tests you've just written, or the changes may be untested."
+      else
+        puts "Run these tests:"
+        puts tests_to_run.sort.reverse
+      end
+
+      tests_to_run
+    end
+
     private
 
     def exclude_from_map?(file_name)
@@ -67,6 +85,32 @@ module MissCleo
           end
         end
 
+      end
+    end
+
+    def all_lines_changed
+      @_all_lines_changed ||= Set.new.tap do |changed_lines|
+        repo = Rugged::Repository.new '.'
+        puts "Best used if local integration is sync'ed with local feature branch"
+        last_common_commit = `git merge-base integration HEAD`.chomp
+        current_branch = `git rev-parse --abbrev-ref HEAD`.chomp
+        last_sha = repo.branches[current_branch].target_id
+        repo.diff(last_common_commit, last_sha).each_patch do |patch|
+          file = patch.delta.old_file[:path]
+
+          patch.each_hunk do |hunk|
+            hunk.each_line do |line|
+              case line.line_origin
+              when :addition
+                changed_lines << [file, line.new_lineno] unless exclude_from_map?(file)
+              when :deletion
+                changed_lines << [file, line.old_lineno] unless exclude_from_map?(file)
+              when :context
+                # do nothing
+              end
+            end
+          end
+        end
       end
     end
   end
