@@ -14,8 +14,12 @@ describe MissCleo::CoverageMap do
       [
         [
           "test",
-          { "tested_file" => line_coverage_before },
-          { "tested_file" => line_coverage_after }
+          { "before" =>
+            {"tested_file" => line_coverage_before },
+            "after" =>
+            { "tested_file" => line_coverage_after },
+              "templates" => []
+          }
         ]
       ]
     end
