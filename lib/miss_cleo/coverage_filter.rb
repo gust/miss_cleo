@@ -1,17 +1,17 @@
 module MissCleo
-  class CoverageFilter
+  module CoverageFilter
+    module_function
     GEM_PATHS = ENV["GEM_PATH"].split(":")
     RUBY_PATH = `which ruby`.chomp.gsub("/bin/ruby","")
 
-    def self.filter_core(result_hash)
-
+    def filter_core(result_hash)
       # Don't include gems in coverage map
       result_hash.reject do |file, line|
         ([RUBY_PATH] + GEM_PATHS).any? { |path| file.include?(path) }
       end
     end
 
-    def self.normalize_paths(result_hash)
+    def normalize_paths(result_hash)
       normalized_hash = Hash.new
       result_hash.each do |key, value|
         trimmed_key = key.gsub(/#{Regexp.quote(`pwd`.chomp)}\//, "")
@@ -21,11 +21,13 @@ module MissCleo
       normalized_hash
     end
 
-    def self.filter_and_trim(result_hash)
+    def filter_and_trim(result_hash)
       filtered = filter_core(result_hash)
       normalize_paths(filtered)
     end
 
+    private_class_method :filter_core
+    private_class_method :normalize_paths
   end
 
 end

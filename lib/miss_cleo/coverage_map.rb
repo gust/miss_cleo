@@ -1,6 +1,23 @@
 module MissCleo
   class CoverageMap
 
+    def self.build(file_names)
+      cov_map = self.new
+      file_names.each do |file_name|
+        File.open(file_name, "r") do |f|
+          f.read
+        end.tap do |contents|
+          begin
+            cov_map.add_to_coverage_map(JSON.parse(contents))
+          rescue
+            puts "#{file_name} is malformed, this may affect test predictons"
+          end
+        end
+      end
+
+      cov_map
+    end
+
     attr_reader :map
 
     def initialize(map = nil)

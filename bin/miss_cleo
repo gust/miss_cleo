@@ -1,18 +1,32 @@
 #!/usr/bin/env ruby
 
 require "miss_cleo"
-include ::MissCleo::CoverageMapHelper
 
 case ARGV.first
 when "build_deck"
-  build_deck(ARGV[1..-1])
+  files = ARGV[1..-1]
+  puts "Building your deck with #{files}"
+  coverage_map = ::MissCleo::CoverageMap.build(files)
+  puts "Saving map as zip file"
+  ::MissCleo::CoverageMapUtilities::SaveZip.zip(coverage_map)
 when "predict"
   unless ARGV[1]
     puts "Specify a coverage map."
     puts "e.g. 'miss_cleo predict map.json.gz"
   else
-    map = File.open(ARGV[1]).read.gunzip
-    predict(map)
+    raw_map = File.open(ARGV[1]).read.gunzip
+    map = ::MissCleo::CoverageMap.new(JSON.parse(raw_map))
+    lines_changed = ::MissCleo::DiffDetector.lines_changed
+    tests_to_run = ::MissCleo::TestSelector.predict(map, lines_changed)
+    if lines_changed.empty?
+      puts "No line changes detected."
+    elsif tests_to_run.empty?
+      puts "No tests found. May be due to blind spot, new tests you've just written, or the changes may be untested."
+    else
+      puts "Run these tests:"
+      puts tests_to_run.sort.reverse
+      ::MissCleo::TestRunner.new(tests_to_run, lines_changed).run_tests
+    end
   end
 else
   puts "Please run miss_cleo with 'build_deck' or 'predict'."

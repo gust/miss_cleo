@@ -17,10 +17,12 @@ Gem::Specification.new do |spec|
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   spec.executables   = ["miss_cleo"]
   spec.require_paths = ["lib"]
+  spec.required_ruby_version = '>= 2.3.0'
 
-  spec.add_development_dependency "bundler", "~> 1.7.6"
+  spec.add_development_dependency "bundler"
   spec.add_development_dependency "rake", "~> 10.5.0"
   spec.add_development_dependency "pry", "~> 0.9.12"
+  spec.add_development_dependency "rspec"
   spec.add_runtime_dependency "rugged", "~> 0.23.3"
   spec.add_runtime_dependency "gzip", "~> 1.0"
 end
