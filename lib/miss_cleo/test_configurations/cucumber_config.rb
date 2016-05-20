@@ -14,7 +14,7 @@ module MissCleo
           execute.call
           after = Coverage.peek_result
           templates = MissCleo::TemplateTracker.templates.uniq
-          if file_and_line = scenario.try(:file_colon_line)
+          if file_and_line = [scenario.location.file, scenario.location.lines.to_s].join(":")
             map_logger.add_to_log(file_and_line, before, after, templates)
           end
         end
