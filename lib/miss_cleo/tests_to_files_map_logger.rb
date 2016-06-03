@@ -15,7 +15,11 @@ module MissCleo
     end
 
     def export_logs
-      File.open(file_name, 'w') { |f| f.write JSON.dump logs }
+      if File.exists?(file_name)
+        file = JSON.parse(File.read(file_name))
+        @logs += file
+      end
+      File.open(file_name, 'w') { |f| f.write JSON.dump @logs }
     end
 
     private

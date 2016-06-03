@@ -32,5 +32,15 @@ describe MissCleo::TestsToFilesMapLogger do
       expect(File.exists?(file_name)).to be
       FileUtils.rm(file_name)
     end
+
+    it "appends to an existing log" do
+      file_name = 'test.json'
+      File.open(file_name, 'w') { |f| f.write JSON.dump [["hello"]] }
+      logger = described_class.new(file_name)
+      logger.export_logs
+      lines = File.read(file_name)
+      expect(lines).to eq("[[\"hello\"]]")
+      FileUtils.rm(file_name)
+    end
   end
 end
